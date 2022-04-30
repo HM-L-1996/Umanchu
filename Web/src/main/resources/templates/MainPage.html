@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- fontawesom -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>    
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js'></script>
+    <script src="./js/mainJs.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+     <!-- Slick Carousel -->
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+     <!-- daum address -->
+     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+     <!-- TypeIt -->
+     <script src="https://unpkg.com/typeit@8.4.0/dist/index.umd.js"></script>
+    <title>우만추</title>
+</head>
+<header>
+    <nav class="navbar">
+        <div class="navbar__title">
+             <img src="./img/logo1.png" alt="not found">   
+             <span class ="navbar__title_title">우만추</span>
+        </div>        
+    </nav>
+</header>
+<body>
+    <section id ="section1">
+        <div class="address">
+            <div class="address_text"> 대기중 인원은 <span id="countValue"></span>명 입니다. </div>
+            <div class="address_container">                
+                <div class="address_box sample_a">
+                    <i class="fa-solid fa-user"></i>
+                    <input class = "box__input" type="text" id="sample_a" placeholder="장소를 입력해주세요."readonly > 
+                    <div class="box__search" onclick="openAddress('sample_a')">검색</div>                    
+                    <div class="box__close">x</div>                    
+                </div>                
+                <div class="address_box sample_b">
+                    <i class="fa-solid fa-user"></i>
+                    <input class = "box__input" type="text" id="sample_b" placeholder="장소를 입력해주세요." readonly >                                          
+                    <div class="box__search" onclick="openAddress('sample_b')">검색</div>
+                    <div class="box__close">x</div>
+                </div>                
+                <div class="address_box sample_c">
+                    <i class="fa-solid fa-user"></i>
+                    <input class="box__input" type="text" id="sample_c" placeholder="장소를 입력해주세요." readonly >                                          
+                    <div class="box__search" onclick="openAddress('sample_c')">검색</div>
+                    <div class="box__close">x</div>
+                </div>                
+                <div class="address_box sample_d">
+                    <i class="fa-solid fa-user"></i>
+                    <input class = "box__input" type="text" id="sample_d" placeholder="장소를 입력해주세요." readonly >                                          
+                    <div class="box__search" onclick="openAddress('sample_d')">검색</div>
+                    <div class="box__close">x</div>
+                </div>                
+                <div class="address_box sample_e">
+                    <i class="fa-solid fa-user"></i>
+                    <input class = "box__input" type="text" id="sample_e" placeholder="장소를 입력해주세요." readonly >                                          
+                    <div class="box__search" onclick="openAddress('sample_e')">검색</div>
+                    <div class="box__close">x</div>
+                </div>                
+                <div class="address_box sample_f">
+                    <i class="fa-solid fa-user"></i>
+                    <input class = "box__input" type="text" id="sample_f" placeholder="장소를 입력해주세요." readonly >                                          
+                    <div class="box__search" onclick="openAddress('sample_f')">검색</div>
+                    <div class="box__close">x</div>
+                </div>                                
+                <div class="address_box sample_g">
+                    <i class="fa-solid fa-user"></i>
+                    <input class = "box__input" type="text" id="sample_g" placeholder="장소를 입력해주세요." readonly >                                          
+                    <div class="box__search" onclick="openAddress('sample_g')">검색</div>
+                    <div class="box__close">x</div>
+                </div>                             
+                <div class="address_box sample_h">
+                    <i class="fa-solid fa-user"></i>
+                    <input class = "box__input" type="text" id="sample_h" placeholder="장소를 입력해주세요." readonly >                                          
+                    <div class="box__search" onclick="openAddress('sample_h')">검색</div>
+                    <div class="box__close">x</div>
+                </div>                             
+            </div>
+                            
+            <div class="address_plus"> + </div>
+            <div class="address_set">
+                <div class="set__init">초기화</div>
+                <div class="confirm_not_select">확인</div>                
+            </div>    
+        </div>
+        <div class="bg_img">
+            <img src="./img/background.png" alt="not found image">
+        </div>
+        <div class="right_sub1">             
+        </div>
+        <div class="right_sub2">            
+        </div>                  
+      
+    </section>
+     
+   <script>    
+    new TypeIt(".right_sub1", {
+    speed: 70,
+    })    
+    .type("친구들과 어디에서 만나서 고민이야?")
+    .move(-5, { delay: 100 })
+    .pause(500)
+    .type("뭐할지 ")
+    .move(5)
+    .type("<br> 그렇다면 이사이트 하나면 돼 ")
+    .pause(800)
+    .delete()
+    .type("만날 장소를 고를땐")
+    .go();
+
+    new TypeIt(".right_sub2", {
+    strings: ["#우만추"],
+    startDelay: 8000,
+    speed: 50,
+    }).go();
+
+   </script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>추천페이지</title>
+    <link rel="stylesheet" href="./css/navbar.css" />
+    <link rel="stylesheet" href="./css/recommand.css" />
+    <!-- pageNation -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"
+      integrity="sha512-1zzZ0ynR2KXnFskJ1C2s+7TIEewmkB2y+5o/+ahF7mwNj9n3PnzARpqalvtjSbUETwx6yuxP5AJXZCpnjEJkQw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- fontawesom -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+    <!-- Swiper -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js" defer></script>
+    <!-- anyChart -->
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
+    <!-- PieChart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+     <!-- TypeIt -->
+    <script src="https://unpkg.com/typeit@8.4.0/dist/index.umd.js"></script>
+    <!-- ScrollOut -->
+    <script src="https://unpkg.com/scroll-out/dist/scroll-out.min.js"></script>
+    <script src="./js/recommand.js"></script>
+    <script src="./js/modal.js"></script>
+    <!-- 구글 길찾기 Polyline 관련 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="navbar__title">
+          <img src="./img/logo1.png" alt="not found">
+          <span class="navbar__title_title">우만추</span>
+        </div>
+        <ul class="navbar__menu_1">
+          <li><button class="scroll_top">상단이동</button></li>
+        </ul>
+      </nav>
+    </header>
+    <section id="recommand_first">
+      <div class="form_container">
+        <div class="midPoint">
+        <img class= "midPoint_img"src="./img/secondlogo.png" alt="not found">
+          &nbsp;중간지점은&nbsp;
+          <span class="midPoint_value" id="midpoint" th:text="${station}"></span>
+          &nbsp; 입니다
+         
+          
+ 		  <!-- 세션값을 JavaScript 쪽으로 넘겨주기 위해 전역 변수 선언 -->
+          <script type="text/javascript" th:inline="javascript">
+          var userLatLanArr = "[[${session.latlngArr}]]";
+          userLatLanArr = JSON.parse(userLatLanArr);
+          console.log(userLatLanArr);
+          
+          // 모델 값을 전역으로 선언
+          var stationLat = "[[${stationLat}]]"
+          var stationLng = "[[${stationLng}]]"
+          console.log(stationLat);
+          console.log(stationLng); 
+          </script>
+
+        </div>
+        <div class="big_divider">대분류 태그를 선택해주세요</div>
+        <div class="select_FP">
+          <div class="tag_select tag_checked" id="box__food">먹거리</div>
+          <div class="tag_select" id="box__play">놀거리</div>
+        </div>
+        <div class="ms_divider">중분류 혹은 소분류 태그를 선택해주세요</div>
+        <div class="select_ms">
+          <div class="tag_select tag_checked" id="middle_select">중분류</div>
+          <!-- <div class="tag_select" id="small_select">소분류</div> -->
+          <div class="tag_not_select" id="small_select">소분류</div>
+        </div>
+        <!-- middle box -->
+        <div class="middle_box">
+          <div class="middle_divider">중분류 태그</div>
+          <div class="tag_box">
+            <div class="tag_box_1">
+              <div class="tag_content" id="m_tag_a">한식</div>
+              <div class="tag_content" id="m_tag_b">중식</div>
+              <div class="tag_content" id="m_tag_c">일식</div>
+            </div>
+            <div class="tag_box_2">
+              <div class="tag_content" id="m_tag_d">양식</div>
+              <div class="tag_content" id="m_tag_e">카페</div>
+              <div class="tag_content" id="m_tag_f">술집</div>
+            </div>
+            <div class="tag_box_3">
+              <div class="tag_content" id="m_tag_g"></div>
+              <div class="tag_content" id="m_tag_h"></div>
+              <div class="tag_content" id="m_tag_i"></div>
+            </div>
+          </div>
+        </div>
+        <!-- small box -->
+        <div class="small_box">
+          <div class="small_divider">
+            소분류 태그 개수 :&nbsp;
+            <span id="count_tag"></span>
+          </div>
+          <div class="tag_box">
+            <div class="tag_box_1">
+              <div class="tag_content" id="s_tag_a"></div>
+              <div class="tag_content" id="s_tag_b"></div>
+              <div class="tag_content" id="s_tag_c"></div>
+            </div>
+            <div class="tag_box_2">
+              <div class="tag_content" id="s_tag_d"></div>
+              <div class="tag_content" id="s_tag_e"></div>
+              <div class="tag_content" id="s_tag_f"></div>
+            </div>
+            <div class="tag_box_3">
+              <div class="tag_content" id="s_tag_g"></div>
+              <div class="tag_content" id="s_tag_h"></div>
+              <div class="tag_content" id="s_tag_i"></div>
+            </div>
+          </div>
+        </div>
+        <div class="form_set">
+          <div class="form__clear">뒤로</div>
+          <div class="form__confirm">확인</div>
+        </div>
+      </div>
+      <div class="bg_img">
+        <img src="./img/background.png" alt="not found image" />
+      </div>
+      <div class="right_sub1">만날 장소를 고를땐</div>
+      <div class="right_sub2">#우만추</div>
+    </section>
+    <section data-scroll id="recommand_second">
+    <div class="second_title"> 
+      <span class="second_title_big">베스트 추천(5)</span>
+      <span class="second_title_small">우만추가 추천하는 인기 장소입니다. </span> 
+    </div>
+      <div class="map_container">
+        <div id="staticMap" style="width: 70%; height: 100vh;">
+			</div>
+        <div class="recommand_list">
+          <div class="recommand__card" id="myBtn1" onclick="Action_Slide(1)">
+          
+          </div>
+          <div class="recommand__card" id="myBtn2" onclick="Action_Slide(2)">
+          
+          </div>
+          <div class="recommand__card" id="myBtn3" onclick="Action_Slide(3)">
+          
+          </div>
+          <div class="recommand__card" id="myBtn4" onclick="Action_Slide(4)">
+          
+          </div>
+          <div class="recommand__card" id="myBtn5" onclick="Action_Slide(5)">
+          
+          </div>
+        </div>
+      </div>
+    </section>
+    <section data-scroll id="recommand_third">
+      <div class="third_title"> 
+        <span class="third_title_big">플러스 추천 </span>
+        <span class="third_title_small">탑 5를 제외한 사용자 맞춤 리스트입니다.</span> 
+      </div>
+      <div class="swiper">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            
+          </div>
+          <!-- 네비게이션 -->
+          <div class="swiper-button-next"></div>
+          <!-- 다음 버튼 (오른쪽에 있는 버튼) -->
+          <div class="swiper-button-prev"></div>
+          <!-- 이전 버튼 -->
+          <!-- 페이징 -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+    <section data-scroll id="recommand_fourth">
+      <div class="word_container">
+        <div class="word_container2">
+          <div class="key_word">
+            <span class="cloud_word" id="midpoint" th:text="${station}">  </span> 핫 키워드
+          </div>
+          <div class="h_divider"></div>
+          <div class="fourth_title">
+            <span class="fourth_title_big">키워드 분포율</span>
+            <span class="fourth_title_small">중간지점의 키워드의 비율입니다.</span> 
+          </div>
+          <div class="box_button">
+            <div class="word_btn food_button">먹거리로 재추천</div>
+            <div class="word_btn play_button">놀거리로 재추천</div>
+          </div>
+          <!-- 파이 차트 -->
+          <div class="word_cloud">
+            <div class="cloud_food">
+              <canvas id="myChart_food" style="width:100%;max-width:700px"></canvas>              
+            </div>
+            <div class="cloud_play">              
+                <canvas id="myChart_play" style="width:100%;max-width:700px"></canvas>              
+            </div>
+          </div>
+          <!-- 워드 클라우드 -->
+          <!-- <div class="word_cloud">
+            <div class="cloud_food">
+              <div class="chart-area">
+                <div id="food_container"></div>
+              </div>
+            </div>
+            <div class="cloud_play">
+              <div class="chart-area">
+                <div id="play_container"></div>
+              </div>
+            </div>
+          </div> -->
+          
+        </div>
+      </div>
+    </section>
+    <!-- modal popup -->
+    <div class="info_modal">
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <div class="container">
+            <div class="cDirectionMap" id="DirectionMap"></div>
+            <div class="modalContainer">
+            <!--        <div class="m_btn btn_1" onclick="selectUserDirection(1)">1</div>
+            <div class="m_btn btn_2">2</div>
+            <div class="m_btn btn_3">3</div>
+            <div class="m_btn btn_4">4</div>
+            <div class="m_btn btn_5">5</div>
+            <div class="m_btn btn_6">6</div>
+            <div class="m_btn btn_7">7</div>
+            <div class="m_btn btn_8">8</div> -->
+            </div>
+
+            <div class="infobox">
+
+          	</div>
+       	 	</div>
+     	 </div>
+    	</div>
+    </div>
+    <script>
+    ScrollOut({
+      // once:true,
+    });
+    new TypeIt(".right_sub2", {    
+    startDelay: 2000,
+    speed: 60,
+    waitUntilVisible: true,
+    })    
+    .go();
+    new TypeIt(".second_title", {
+    startDelay: 1000,
+    speed: 60,
+    waitUntilVisible: true,
+    })    
+    .go();    
+    new TypeIt(".third_title", {
+    startDelay: 1000,
+    speed: 60,
+    waitUntilVisible: true,
+    })    
+    .go();    
+    new TypeIt(".fourth_title", {
+    startDelay: 1000,
+    speed: 60,
+    waitUntilVisible: true,
+    })    
+    .go();
+
+    </script>
+    <!-- static 지도 관련 스크립트 -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=APIKEY"
+      async
+    ></script>
+  </body>
+</html>
